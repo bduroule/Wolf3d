@@ -13,7 +13,7 @@ SRC_PATH = ./srcs/
 INC_PATH = ./include/
 
 #file
-SRC_NAME = 	main.c
+SRC_NAME = 	main.c parcing.c error.c
 
 # mlx library
 MLX        = ./miniLibx_macos/

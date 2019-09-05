@@ -24,6 +24,15 @@ typedef struct			s_env
     double              py;
     double              time;
     double              otim;
+    int                 **map;
+    int                 width;
+    int                 height;
 }						t_env;
+
+typedef struct          s_map
+{
+    int                 *n;
+    struct s_map        *next;
+}                       t_map;
 
 #endif

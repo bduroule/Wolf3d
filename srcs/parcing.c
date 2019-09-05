@@ -11,65 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "fdf.h"
-#include <stdio.h>
-
-int					store_coord(t_map *map, t_env *env)
-{
-	int			i;
-	int			j;
-	t_map		*tmp;
-
-	i = 0;
-	tmp = map;
-	if (!(env->map = malloc(sizeof(t_coord) * env->height)))
-		return (0);
-	while (i < env->height)
-	{
-		if (!(env->map[i] = malloc(sizeof(t_coord) * env->width)))
-			return (0);
-		i++;
-	}
-	i = 0;
-	while (i < env->height)
-	{
-		j = -1;
-		while (++j < env->width)
-			rotate(file, tmp, i, j);
-		i++;
-		tmp = tmp->next;
-	}
-	return (1);
-}
-
-static int			store_line(t_map **origin, t_file *file, char **tab, int i)
-{
-	t_map		*tmp;
-	t_map		*new;
-
-	if (!(new = (t_map *)malloc(sizeof(t_map))))
-		return (0);
-	i = 0;
-	while (tab[i])
-		i++;
-	env->width = i;
-	if (!(new->i_tab = (int *)malloc(sizeof(int) * i)))
-		return (0);
-	i = -1;
-	while (tab[++i])
-		new->i_tab[i] = ft_atoi(tab[i]);
-	new->next = NULL;
-	if (*origin == NULL)
-		*origin = new;
-	else
-	{
-		tmp = *origin;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
-	}
-	return (1);
-}
+#include "wolf3d.h"
 
 void				free_tab(char ***tab)
 {
@@ -87,7 +29,58 @@ void				free_tab(char ***tab)
 	ft_memdel((void **)tab);
 }
 
-int					split_map(int fd, t_map **map, t_file *file)
+int				store_line(t_map *map, t_env env, char **tab, int i)
+{
+	t_map	*tmp;
+	t_map	*new;
+
+	i = 0;
+	if(!(new = (t_map *)malloc(sizeof(t_map))))
+		return (0);
+	while (tab[i])
+		i++;
+	if(!(env->map = (int *)malloc(sizeof(int)* i)))
+		return (0);
+	i = -1;
+	while (tab[++i])
+		env->map[i] = ft_atoi(tab[i]);
+	if (map == NULL)
+		map = new;
+	else
+	{
+		tmp = map;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
+	return (1);
+}
+
+int					store_coord(t_map *map, t_env *env)
+{
+	int		i;
+	int		j;
+	t_map	*tmp;
+
+	i = -1;
+	tmp = map;
+	if (!(env->map = (int **)malloc(sizeof(int *) * env->height)))
+		return (0);
+	while (++i < env->height)
+		if (!(env->map[i] = (int * )malloc(sizeof(int) * env->width)))
+			return (0);
+	i = -1;
+	while (++i < env->height)
+	{
+		j = -1;
+		while (++j < env->width)
+			env->map[i][j] = map->n[j];
+		map = map->next;
+	}
+	return (0);
+}
+
+int					split_map(int fd, t_map **map, t_env *env)
 {
 	char	*line;
 	char	**tab;
