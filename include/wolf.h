@@ -3,6 +3,16 @@
 
 # include "../libft/include/libft.h"
 # include "../minilibx_macos/mlx.h"
+# include <unistd.h>
+# include <errno.h>
+# include <math.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+
+//----------------------------------------------------------------------------------------------
+#include <stdio.h>
+//----------------------------------------------------------------------------------------------
 
 #define WIDTH 1280
 #define HEIGHT 720
@@ -34,5 +44,11 @@ typedef struct          s_map
     int                 *n;
     struct s_map        *next;
 }                       t_map;
+
+int					split_map(int fd, t_map **map, t_env *env);
+void	            free_file(t_env *env, t_map *map, char **tab, char *line);
+int		            check_line(char **tab, int *count);
+int		            count_line(char **tab);
+void				free_tab(char ***tab);
 
 #endif

@@ -11,12 +11,12 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "wolf3d.h"
+#include "wolf.h"
 
-void	free_file(t_file *file, t_map *map, char **tab, char *line)
+void	free_file(t_env *env, t_map *map, char **tab, char *line)
 {
 	(void)map;
-	free(file);
+	free(env);
 	free(line);
 	free_tab(&tab);
 	write(1, "map error\n", 10);

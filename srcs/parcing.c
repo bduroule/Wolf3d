@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "wolf3d.h"
+#include "wolf.h"
 
 void				free_tab(char ***tab)
 {
@@ -29,8 +29,9 @@ void				free_tab(char ***tab)
 	ft_memdel((void **)tab);
 }
 
-int				store_line(t_map *map, t_env env, char **tab, int i)
+int				store_line(t_map **map, t_env *env, char **tab, int i)
 {
+	(void)env;
 	t_map	*tmp;
 	t_map	*new;
 
@@ -39,16 +40,18 @@ int				store_line(t_map *map, t_env env, char **tab, int i)
 		return (0);
 	while (tab[i])
 		i++;
-	if(!(env->map = (int *)malloc(sizeof(int)* i)))
+	env->width = i;
+	if(!(new->n = (int *)malloc(sizeof(int) * i)))
 		return (0);
 	i = -1;
 	while (tab[++i])
-		env->map[i] = ft_atoi(tab[i]);
-	if (map == NULL)
-		map = new;
+		new->n[i] = ft_atoi(tab[i]);
+	new->next = NULL;
+	if (*map == NULL)
+		*map = new;
 	else
 	{
-		tmp = map;
+		tmp = *map;
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new;
@@ -69,19 +72,21 @@ int					store_coord(t_map *map, t_env *env)
 	while (++i < env->height)
 		if (!(env->map[i] = (int * )malloc(sizeof(int) * env->width)))
 			return (0);
-	i = -1;
-	while (++i < env->height)
+	i = 0;
+	while (i < env->height)
 	{
 		j = -1;
 		while (++j < env->width)
-			env->map[i][j] = map->n[j];
-		map = map->next;
+			env->map[i][j] = tmp->n[j];
+		i++;
+		tmp = tmp->next;
 	}
 	return (0);
 }
 
 int					split_map(int fd, t_map **map, t_env *env)
 {
+	(void)map;
 	char	*line;
 	char	**tab;
 	int		n;
@@ -96,8 +101,8 @@ int					split_map(int fd, t_map **map, t_env *env)
 		if (!(tab = ft_strsplit(line, ' ')))
 			return (0);
 		if (check_line(tab, &count) == 0)
-			free_file(file, *map, tab, line);
-		if (!(store_line(map, file, tab, i)))
+			free_file(env, *map, tab, line);
+		if (!(store_line(map, env, tab, i)))
 			return (0);
 		if (line)
 			free(line);
@@ -105,6 +110,6 @@ int					split_map(int fd, t_map **map, t_env *env)
 		n++;
 	}
 	env->height = n;
-	store_coord(*map, file);
+	store_coord(*map, env);
 	return (1);
 }

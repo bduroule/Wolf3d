@@ -32,7 +32,7 @@ OBJ	= $(addprefix $(OBJ_PATH), $(SRC_NAME:.c=.o))
 
 #compil
 CC = gcc
-CFLAGS = -Werror -Wextra -Wall $(INC_HDR) -ggdb -O3
+CFLAGS = -Werror -Wextra -Wall $(INC_HDR) -O3
 
 all: $(NAME)
 
