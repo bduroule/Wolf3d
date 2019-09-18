@@ -11,20 +11,22 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
+#include "wolf.h"
+
 void init_a(t_env *env)
 {  
     env->posX = 22.0;
     env->posY = 11.5;
-    env->dirX = -1.0
+    env->dirX = -1.0;
     env->dirY = 0.0;
     env->planeX = 0.0;
     env->planeY = 0.66;
     env->time = 0;
-    env->oldTime = 0;
+    env->oldtime = 0;
 
 }
 
-void algo(t_env *env)
+/*void algo(t_env *env)
 {
     
-}
+}*/

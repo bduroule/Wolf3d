@@ -1,5 +1,18 @@
 #include "wolf.h"
-# include <stdio.h>
+
+void    wolf_run(t_env *env)
+{
+    int x;
+
+    x = -1;
+    while (++x < WIDTH)
+    {
+        init_raycasting(env, x);
+        init_calc_raycasting(env);
+        raycasting_hit(env);
+        raycasting_wall_distance(env, x);
+    }
+}
 
 int     main(int ac, char **av)
 {
@@ -15,6 +28,7 @@ int     main(int ac, char **av)
         return (0);
     if ((fd = open(av[1], O_RDONLY)) == -1)
         return (0);
+    
     map = NULL;
 	env->mlx_ptr = mlx_init();
 	env->win_ptr = mlx_new_window(env->mlx_ptr, WIDTH, HEIGHT, "Wolf3d");

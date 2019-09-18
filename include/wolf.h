@@ -14,8 +14,8 @@
 #include <stdio.h>
 //----------------------------------------------------------------------------------------------
 
-#define WIDTH 1280
-#define HEIGHT 720
+#define WIDTH 512
+#define HEIGHT 384
 
 typedef struct			s_env
 {
@@ -26,18 +26,42 @@ typedef struct			s_env
     int					bpp;
 	int					s_l;
     int					endian;
-    double              posx;
-    double              posy;
-    double              dirx;
-    double              diry;
-    double              px;
-    double              py;
+    double              posX;
+    double              posY;
+    double              dirX;
+    double              dirY;
+    double              planeX;
+    double              planeY;
     double              time;
-    double              otim;
+    double              oldtime;
     int                 **map;
     int                 width;
     int                 height;
+    double              cameraX;
+    double              rayDirX;
+    double              rayDirY;
+    int                 mapX;
+    int                 mapY;
+    double              sideDistX;
+    double              sideDistY;
+    double              deltaDistX;
+    double              deltaDistY;
+    double              perpWallDist;
+    int                 stepX;
+    int                 stepY;
+    int                 hit;
+    int                 side;
+    int                 lineHeight;
+    int                 drawStart;
+    int                 drawEnd;
 }						t_env;
+
+typedef struct          s_color
+{
+    int                 r;
+    int                 g;
+    int                 b;
+}                       t_color;
 
 typedef struct          s_map
 {
@@ -50,5 +74,11 @@ void	            free_file(t_env *env, t_map *map, char **tab, char *line);
 int		            check_line(char **tab, int *count);
 int		            count_line(char **tab);
 void				free_tab(char ***tab);
+void            init_raycasting(t_env *env, int x);
+void            init_calc_raycasting(t_env *env);
+void            raycasting_hit(t_env *env);
+void        raycasting_wall_distance(t_env *env, int x);
+void    wolf_run(t_env *env);
+void        draw_wall(t_env *env, int x);
 
 #endif

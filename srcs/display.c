@@ -11,7 +11,10 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
+#include "wolf.h"
+
 void display(t_env *env)
 {
+    wolf_run(env);
     mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->ptr_img, 0, 0);
 }
