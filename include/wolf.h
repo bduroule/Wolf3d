@@ -74,11 +74,14 @@ void	            free_file(t_env *env, t_map *map, char **tab, char *line);
 int		            check_line(char **tab, int *count);
 int		            count_line(char **tab);
 void				free_tab(char ***tab);
-void            init_raycasting(t_env *env, int x);
-void            init_calc_raycasting(t_env *env);
-void            raycasting_hit(t_env *env);
-void        raycasting_wall_distance(t_env *env, int x);
-void    wolf_run(t_env *env);
-void        draw_wall(t_env *env, int x);
+void                init_raycasting(t_env *env, int x);
+void                init_calc_raycasting(t_env *env);
+void                raycasting_hit(t_env *env);
+void                raycasting_wall_distance(t_env *env, int x);
+void                wolf_run(t_env *env);
+void                draw_wall(t_env *env, int x);
+void                init_a(t_env *env);
+void                display(t_env *env);
+void                hook_loop(t_env *env);
 
 #endif

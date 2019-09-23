@@ -37,18 +37,16 @@ void        draw_wall(t_env *env, int x)
     t_color color;
 
     color = (t_color){.r = 0, .g = 0, .b = 0};
-    while (env->map[env->mapX][env->mapY])
-    {
-        if (env->map[env->mapX][env->mapY] == 1)
-            wall_color(&color, 255, 0, 0);
-        if (env->map[env->mapX][env->mapY] == 2)
-            wall_color(&color, 0, 255, 0);
-        if (env->map[env->mapX][env->mapY] == 3)
-            wall_color(&color, 0, 0, 255);
-        if (env->map[env->mapX][env->mapY] == 4)
-            wall_color(&color, 0, 0, 0);
-        if (env->map[env->mapX][env->mapY] == 5)
-            wall_color(&color, 255, 255, 0);
-        color_pixel(env, x, env->drawStart, color);
-    }
+    if (env->map[env->mapX][env->mapY] == 1)
+        wall_color(&color, 255, 0, 0);
+    else if (env->map[env->mapX][env->mapY] == 2)
+        wall_color(&color, 0, 255, 0);
+    else if (env->map[env->mapX][env->mapY] == 3)
+        wall_color(&color, 0, 0, 255);
+    else if (env->map[env->mapX][env->mapY] == 4)
+        wall_color(&color, 0, 0, 0);
+    else if (env->map[env->mapX][env->mapY] == 5)
+        wall_color(&color, 255, 255, 0);
+    color_pixel(env, x, env->drawStart, color);
+    //dprintf(1, "COUCOU  = %d\n", );
 }

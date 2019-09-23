@@ -25,8 +25,3 @@ void init_a(t_env *env)
     env->oldtime = 0;
 
 }
-
-/*void algo(t_env *env)
-{
-    
-}*/
