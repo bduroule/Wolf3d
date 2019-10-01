@@ -23,10 +23,11 @@ int		out(void *param)
 int		deal_key(int key, t_env *env)
 {
     env->moveSpeed = 0.02 * 5.0;
-    env->rotSpeed = 0.03 * 3.0;
+    env->rotSpeed = 0.02 * 3.0;
     if (key == 0)
     {
         env->oldDirX = env->dirX;
+        env->oldPlaneX = env->planeX;
         env->dirX = env->dirX * cos(env->rotSpeed) - env->dirY * sin(env->rotSpeed);
         env->dirY = env->oldDirX * sin(env->rotSpeed) + env->dirY * cos(env->rotSpeed);
         env->planeX = env->planeX * cos(env->rotSpeed) - env->planeY * sin(env->rotSpeed);
@@ -40,6 +41,7 @@ int		deal_key(int key, t_env *env)
     if (key == 2)
     {
         env->oldDirX = env->dirX;
+        env->oldPlaneX = env->planeX;
         env->dirX = env->dirX * cos(-env->rotSpeed) - env->dirY * sin(-env->rotSpeed);
         env->dirY = env->oldDirX * sin(-env->rotSpeed) + env->dirY * cos(-env->rotSpeed);
         env->planeX = env->planeX * cos(-env->rotSpeed) - env->planeY * sin(-env->rotSpeed);

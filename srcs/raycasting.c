@@ -21,7 +21,7 @@ void            init_raycasting(t_env *env, int x)
     env->mapX = (int)env->posX;
     env->mapY = (int)env->posY;
     env->deltaDistX = ft_sqrt(1 + (env->rayDirY * env->rayDirY) / (env->rayDirX * env->rayDirX));
-    env->deltaDistY = ft_sqrt(1 + (env->rayDirX * env->rayDirX / env->rayDirY * env->rayDirY));
+    env->deltaDistY = ft_sqrt(1 + (env->rayDirX * env->rayDirX )/ (env->rayDirY * env->rayDirY));
     env->stepX = 0;
     env->stepY = 0;
     env->hit = 0;
