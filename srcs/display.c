@@ -15,6 +15,10 @@
 
 void display(t_env *env)
 {
+    int i = -1, j;
+    while (++i < WIDTH && (j = -1))
+        while (++j < HEIGHT)
+            color_pixel(env, i, j, (t_color){.r = 0, .g = 0, .b = 0});
     wolf_run(env);
     mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->ptr_img, 0, 0);
 }

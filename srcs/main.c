@@ -35,6 +35,7 @@ int     main(int ac, char **av)
 	env->my_str_img = mlx_get_data_addr(env->ptr_img, &(env->bpp), &(env->s_l), &(env->endian));
     if (!(split_map(fd, &map, env)))
         return (write(1, "map error\n", 10));
+    //fps_counter(env);
     display(env);
     hook_loop(env);
     mlx_loop(env->mlx_ptr);

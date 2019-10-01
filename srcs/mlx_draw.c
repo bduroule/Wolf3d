@@ -47,6 +47,9 @@ void        draw_wall(t_env *env, int x)
         wall_color(&color, 0, 0, 0);
     else if (env->map[env->mapX][env->mapY] == 5)
         wall_color(&color, 255, 255, 0);
-    color_pixel(env, x, env->drawStart, color);
-    //dprintf(1, "COUCOU  = %d\n", );
+    while (env->drawStart <= env->drawEnd)
+    {
+        color_pixel(env, x, env->drawStart, color);
+        env->drawStart++;
+    }
 }

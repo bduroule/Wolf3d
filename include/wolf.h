@@ -9,13 +9,14 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <sys/time.h>
 
 //----------------------------------------------------------------------------------------------
 #include <stdio.h>
 //----------------------------------------------------------------------------------------------
 
-#define WIDTH 512
-#define HEIGHT 384
+#define WIDTH 1024
+#define HEIGHT 720
 
 typedef struct			s_env
 {
@@ -50,10 +51,15 @@ typedef struct			s_env
     int                 stepX;
     int                 stepY;
     int                 hit;
-    int                 side;
+    double               side;
     int                 lineHeight;
     int                 drawStart;
     int                 drawEnd;
+    double              frameTime;
+    double              moveSpeed;
+    double              rotSpeed;
+    double              oldPlaneX;
+    double              oldDirX;
 }						t_env;
 
 typedef struct          s_color
@@ -83,5 +89,6 @@ void                draw_wall(t_env *env, int x);
 void                init_a(t_env *env);
 void                display(t_env *env);
 void                hook_loop(t_env *env);
-
+//void                fps_counter(t_env *env);
+void        color_pixel(t_env *env, int x, int y, t_color color);
 #endif

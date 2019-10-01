@@ -15,13 +15,12 @@
 
 void init_a(t_env *env)
 {  
-    env->posX = 22.0;
-    env->posY = 11.5;
+    env->posX = 10;
+    env->posY = 10;
     env->dirX = -1.0;
     env->dirY = 0.0;
     env->planeX = 0.0;
     env->planeY = 0.66;
     env->time = 0;
     env->oldtime = 0;
-
 }
