@@ -37,16 +37,22 @@ void        draw_wall(t_env *env, int x)
     t_color color;
 
     color = (t_color){.r = 0, .g = 0, .b = 0};
-    if (env->map[env->mapX][env->mapY] == 1)
-        wall_color(&color, 255, 0, 0);
-    else if (env->map[env->mapX][env->mapY] == 2)
-        wall_color(&color, 0, 255, 0);
-    else if (env->map[env->mapX][env->mapY] == 3)
-        wall_color(&color, 0, 0, 255);
+    if (env->side == 1)
+    {
+        if (env->stepY == 1)
+            wall_color(&color, 255, 0, 255);
+        else if (env->stepY == -1)
+            wall_color(&color, 0, 0, 255);
+    }
+    else if (env->side == 0)
+    {
+        if (env->stepX == 1)
+            wall_color(&color, 0, 255, 0);
+        else if (env->stepX == -1)
+            wall_color(&color, 255, 255, 0);
+    }
     else if (env->map[env->mapX][env->mapY] == 4)
         wall_color(&color, 0, 0, 0);
-    else if (env->map[env->mapX][env->mapY] == 5)
-        wall_color(&color, 255, 255, 0);
     while (env->drawStart <= env->drawEnd)
     {
         color_pixel(env, x, env->drawStart, color);

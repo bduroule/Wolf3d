@@ -15,7 +15,7 @@
 #include <stdio.h>
 //----------------------------------------------------------------------------------------------
 
-#define WIDTH 1024
+#define WIDTH 1280
 #define HEIGHT 720
 
 typedef struct			s_env
@@ -51,7 +51,7 @@ typedef struct			s_env
     int                 stepX;
     int                 stepY;
     int                 hit;
-    double               side;
+    double              side;
     int                 lineHeight;
     int                 drawStart;
     int                 drawEnd;

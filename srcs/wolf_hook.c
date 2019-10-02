@@ -27,17 +27,19 @@ int		deal_key(int key, t_env *env)
     if (key == 0)
     {
         env->oldDirX = env->dirX;
-        env->oldPlaneX = env->planeX;
         env->dirX = env->dirX * cos(env->rotSpeed) - env->dirY * sin(env->rotSpeed);
         env->dirY = env->oldDirX * sin(env->rotSpeed) + env->dirY * cos(env->rotSpeed);
+        env->oldPlaneX = env->planeX;
         env->planeX = env->planeX * cos(env->rotSpeed) - env->planeY * sin(env->rotSpeed);
         env->planeY = env->oldPlaneX * sin(env->rotSpeed) + env->planeY * cos(env->rotSpeed);
     }
     if (key == 1)
-        {
+    {
+        if(!(env->map[(int)(env->posX - env->dirX * env->moveSpeed)][(int)env->posY]))
             env->posX -= env->dirX * env->moveSpeed;
+        if(!(env->map[(int)env->posX][(int)(env->posY - env->dirY * env->moveSpeed)]))
             env->posY -= env->dirY * env->moveSpeed;
-        }
+    }
     if (key == 2)
     {
         env->oldDirX = env->dirX;
@@ -46,15 +48,17 @@ int		deal_key(int key, t_env *env)
         env->dirY = env->oldDirX * sin(-env->rotSpeed) + env->dirY * cos(-env->rotSpeed);
         env->planeX = env->planeX * cos(-env->rotSpeed) - env->planeY * sin(-env->rotSpeed);
         env->planeY = env->oldPlaneX * sin(-env->rotSpeed) + env->planeY * cos(-env->rotSpeed);
+
     }
     if (key == 13)
-        {
+    {
+        if(!(env->map[(int)(env->posX + env->dirX * env->moveSpeed)][(int)env->posY]))
             env->posX += env->dirX * env->moveSpeed;
+        if(!(env->map[(int)env->posX][(int)(env->posY + env->dirY * env->moveSpeed)]))
             env->posY += env->dirY * env->moveSpeed;
-        }
+    }
     if (key == 53)
         exit(EXIT_SUCCESS);
-    printf("%d\n", key);
     display(env);
     return (0);
 }
