@@ -24,6 +24,10 @@ int		deal_key(int key, t_env *env)
 {
     env->moveSpeed = 0.02 * 5.0;
     env->rotSpeed = 0.02 * 3.0;
+    if (key == 17)
+        env->ttx = 1;
+    if (key == 32)
+        env->ttx = 0;
     if (key == 0)
     {
         env->oldDirX = env->dirX;
@@ -59,6 +63,7 @@ int		deal_key(int key, t_env *env)
     }
     if (key == 53)
         exit(EXIT_SUCCESS);
+    //printf("%d\n", key);
     display(env);
     return (0);
 }

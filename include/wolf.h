@@ -18,12 +18,24 @@
 #define WIDTH 1280
 #define HEIGHT 720
 
+typedef struct          s_texture
+{
+    void                *img;
+    unsigned int        *adr;
+    int                 heigthwrhm;
+    int                 width;
+    int					bpp;
+	int					s_l;
+    int					endian;
+}                       t_texture;
+
 typedef struct			s_env
 {
+    t_texture           tex[4];
 	void				*mlx_ptr;
 	void				*win_ptr;
 	void				*ptr_img;
-	char				*my_str_img;
+	unsigned int		*my_str_img;
     int					bpp;
 	int					s_l;
     int					endian;
@@ -60,6 +72,7 @@ typedef struct			s_env
     double              rotSpeed;
     double              oldPlaneX;
     double              oldDirX;
+    int                 ttx;
 }						t_env;
 
 typedef struct          s_color
@@ -90,5 +103,7 @@ void                init_a(t_env *env);
 void                display(t_env *env);
 void                hook_loop(t_env *env);
 //void                fps_counter(t_env *env);
-void        color_pixel(t_env *env, int x, int y, t_color color);
+void        color_pixel(t_env *env, int x, int y, unsigned int color);
+void generate_tex(t_env *env);
+void draw_tex(t_env *env, int x);
 #endif

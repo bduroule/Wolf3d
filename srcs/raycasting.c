@@ -86,5 +86,8 @@ void        raycasting_wall_distance(t_env *env, int x)
     env->drawEnd = env->lineHeight / 2 + HEIGHT / 2;
     if (env->drawEnd >= HEIGHT)
         env->drawEnd = HEIGHT - 1;
-    draw_wall(env, x);
+    if (env->ttx == 0)
+        draw_wall(env, x);
+    if (env->ttx == 1)
+        draw_tex(env, x);
 }
