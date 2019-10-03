@@ -13,7 +13,7 @@
 
 #include "wolf.h"
 
-void				free_tab(char ***tab)
+void	free_tab(char ***tab)
 {
 	char	**str;
 	int		i;
@@ -29,19 +29,18 @@ void				free_tab(char ***tab)
 	ft_memdel((void **)tab);
 }
 
-int				store_line(t_map **map, t_env *env, char **tab, int i)
+int		store_line(t_map **map, t_env *env, char **tab, int i)
 {
-	(void)env;
 	t_map	*tmp;
 	t_map	*new;
 
 	i = 0;
-	if(!(new = (t_map *)malloc(sizeof(t_map))))
+	if (!(new = (t_map *)malloc(sizeof(t_map))))
 		return (0);
 	while (tab[i])
 		i++;
 	env->width = i;
-	if(!(new->n = (int *)malloc(sizeof(int) * i)))
+	if (!(new->n = (int *)malloc(sizeof(int) * i)))
 		return (0);
 	i = -1;
 	while (tab[++i])
@@ -59,7 +58,7 @@ int				store_line(t_map **map, t_env *env, char **tab, int i)
 	return (1);
 }
 
-int					store_coord(t_map *map, t_env *env)
+int		store_coord(t_map *map, t_env *env)
 {
 	int		i;
 	int		j;
@@ -70,7 +69,7 @@ int					store_coord(t_map *map, t_env *env)
 	if (!(env->map = (int **)malloc(sizeof(int *) * env->height)))
 		return (0);
 	while (++i < env->height)
-		if (!(env->map[i] = (int * )malloc(sizeof(int) * env->width)))
+		if (!(env->map[i] = (int *)malloc(sizeof(int) * env->width)))
 			return (0);
 	i = 0;
 	while (i < env->height)
@@ -84,9 +83,8 @@ int					store_coord(t_map *map, t_env *env)
 	return (0);
 }
 
-int					split_map(int fd, t_map **map, t_env *env)
+int		split_map(int fd, t_map **map, t_env *env)
 {
-	(void)map;
 	char	*line;
 	char	**tab;
 	int		n;

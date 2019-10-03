@@ -43,4 +43,3 @@ int		count_line(char **tab)
 		i++;
 	return (i);
 }
-

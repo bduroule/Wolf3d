@@ -6,93 +6,77 @@
 /*   By: jadonvez <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 15:27:43 by jadonvez     #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/18 15:27:46 by jadonvez    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/10/03 14:21:39 by beduroul    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-unsigned int        wall_color(int r, int g, int b)
+void		drow_loop(t_env *env, int i, int x)
 {
-    return ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
+	uint32_t	color;
+	int			tmp;
+
+	color = 0x000000;
+	while (env->drawstart < env->drawend)
+	{
+		tmp = env->drawstart * 256 - HEIGHT * 128 + env->lineheight * 128;
+		env->t_y = ((tmp * env->tex[i].heigthwrhm) / env->lineheight) / 256;
+		color = get_color(env->tex[i], env->t_x, env->t_y);
+		color = (color >> 1) & 8355711;
+		env->my_str_img[env->drawstart * WIDTH + x] = color;
+		env->drawstart++;
+	}
 }
 
-unsigned int get_color(t_texture tex, int x, int y)
+void		draw_tex(t_env *env, int x)
 {
-   // int i;
+	int i;
 
-    if (!((x >= 0 && x < tex.width) && (y >= 0 && y < tex.heigthwrhm)))
-        return (0);
-    return (tex.adr[y * tex.width + x]);
+	i = 0;
+	if (env->side == 1)
+	{
+		if (env->stepy == 1)
+			i = 0;
+		else if (env->stepy == -1)
+			i = 1;
+	}
+	else if (env->side == 0)
+	{
+		if (env->stepx == 1)
+			i = 2;
+		else if (env->stepx == -1)
+			i = 3;
+	}
+	texture(env, i);
+	drow_loop(env, i, x);
 }
 
-void        color_pixel(t_env *env, int x, int y, unsigned int color)
+void		draw_wall(t_env *env, int x)
 {
-    int i;
+	unsigned int color;
 
-    if (!((x >= 0 && x < WIDTH) && (y >= 0 && y < HEIGHT)))
-        return ;
-    i = (x * 4) + (y * env->s_l);
-    env->my_str_img[env->drawStart * WIDTH + x] = color;
-}
-
-void draw_tex(t_env *env, int x)
-{
-    uint32_t color;
-    int      i;
-
-    i = 0;
-    color = 0x000000;
-    if (env->side == 1)
-    {
-        if (env->stepY == 1)
-            i = 0;
-        else if (env->stepY == -1)
-           i = 1;
-    }
-    else if (env->side == 0)
-    {
-        if (env->stepX == 1)
-            i = 2;
-        else if (env->stepX == -1)
-           i = 3;
-    }
-    //else if (env->map[env->mapX][env->mapY] == 4)
-    //    get_color(env, x, env->drawStart, &color);
-    while (env->drawStart <= env->drawEnd)
-    {
-        env->my_str_img[env->drawStart * WIDTH + x] = get_color(env->tex[i], 155, 5);
-        // get_color(env->tex[i], x, y);
-        //color_pixel(env, x, env->drawStart, color);
-        env->drawStart++;
-    }
-}
-
-void        draw_wall(t_env *env, int x)
-{
-    unsigned int color;
-
-    color = 0;
-    if (env->side == 1)
-    {
-        if (env->stepY == 1)
-            color = wall_color(255, 0, 255);
-        else if (env->stepY == -1)
-            color = wall_color(0, 0, 255);
-    }
-    else if (env->side == 0)
-    {
-        if (env->stepX == 1)
-            color = wall_color(0, 255, 0);
-        else if (env->stepX == -1)
-            color = wall_color(255, 255, 0);
-    }
-    else if (env->map[env->mapX][env->mapY] == 4)
-       color = wall_color(0, 0, 0);
-    while (env->drawStart <= env->drawEnd)
-    {
-        color_pixel(env, x, env->drawStart, color);
-        env->drawStart++;
-    }
+	color = 0;
+	if (env->side == 1)
+	{
+		if (env->stepy == 1)
+			color = wall_color(255, 0, 255);
+		else if (env->stepy == -1)
+			color = wall_color(0, 0, 255);
+	}
+	else if (env->side == 0)
+	{
+		if (env->stepx == 1)
+			color = wall_color(0, 255, 0);
+		else if (env->stepx == -1)
+			color = wall_color(255, 255, 0);
+	}
+	else if (env->map[env->mapx][env->mapy] == 4)
+		color = wall_color(0, 0, 0);
+	while (env->drawstart <= env->drawend)
+	{
+		color_pixel(env, x, env->drawstart, color);
+		env->drawstart++;
+	}
 }
