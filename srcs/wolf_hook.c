@@ -20,10 +20,18 @@ int		out(void *param)
 	return (0);
 }
 
-int		deal_key2(int key, t_env *e)
+void	deal_key1(int key, t_env *e)
 {
 	if (key == 17)
 		e->ttx = 1;
+	if (key == 16)
+		e->ttx = 2;
+	if (key == 32)
+		e->ttx = 0;
+}
+
+int		deal_key2(int key, t_env *e)
+{
 	if (key == 2)
 	{
 		e->olddirx = e->dirx;
@@ -37,9 +45,11 @@ int		deal_key2(int key, t_env *e)
 	}
 	if (key == 13)
 	{
-		if (!(e->map[(int)(e->posx + e->dirx * e->movespeed)][(int)e->posy]))
+		if (!(e->map[(int)((e->posx - (e->dirx > 0 ? -.05 : +.05)) + e->dirx
+			* e->movespeed)][(int)(e->posy)]))
 			e->posx += e->dirx * e->movespeed;
-		if (!(e->map[(int)e->posx][(int)(e->posy + e->diry * e->movespeed)]))
+		if (!(e->map[(int)(e->posx)][(int)((e->posy - (e->diry > 0 ? -.05 :
+		+.05)) + e->diry * e->movespeed)]))
 			e->posy += e->diry * e->movespeed;
 	}
 	if (key == 53)
@@ -52,8 +62,6 @@ int		deal_key(int key, t_env *e)
 {
 	e->movespeed = 0.02 * 5.0;
 	e->rotspeed = 0.02 * 3.0;
-	if (key == 32)
-		e->ttx = 0;
 	if (key == 0)
 	{
 		e->olddirx = e->dirx;
@@ -67,11 +75,14 @@ int		deal_key(int key, t_env *e)
 	}
 	if (key == 1)
 	{
-		if (!(e->map[(int)(e->posx - e->dirx * e->movespeed)][(int)e->posy]))
+		if (!(e->map[(int)((e->posx + (e->dirx > 0 ? -.05 : +.05)) - e->dirx *
+			e->movespeed)][(int)e->posy]))
 			e->posx -= e->dirx * e->movespeed;
-		if (!(e->map[(int)e->posx][(int)(e->posy - e->diry * e->movespeed)]))
+		if (!(e->map[(int)e->posx][(int)((e->posy + (e->diry > 0 ? -.05 :
+		+.05)) - e->diry * e->movespeed)]))
 			e->posy -= e->diry * e->movespeed;
 	}
+	deal_key1(key, e);
 	deal_key2(key, e);
 	return (0);
 }

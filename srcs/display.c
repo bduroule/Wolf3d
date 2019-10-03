@@ -41,6 +41,10 @@ void			display(t_env *env)
 	int j;
 
 	i = -1;
+	if (env->ttx == 1)
+		generate_tex(env);
+	if (env->ttx == 2)
+		generate_tex_p(env);
 	while (++i < WIDTH && (j = -1))
 		while (++j < HEIGHT)
 			env->my_str_img[j * WIDTH + i] = 0x000000;

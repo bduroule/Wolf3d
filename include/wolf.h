@@ -124,5 +124,6 @@ void					texture(t_env *env, int texnb);
 void					sole(t_env *env);
 unsigned int			get_color(t_texture tex, int x, int y);
 unsigned int			wall_color(int r, int g, int b);
+void					generate_tex_p(t_env *env);
 
 #endif

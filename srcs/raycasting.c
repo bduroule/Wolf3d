@@ -90,6 +90,6 @@ void		raycasting_wall_distance(t_env *env, int x)
 		env->drawend = HEIGHT - 1;
 	if (env->ttx == 0)
 		draw_wall(env, x);
-	if (env->ttx == 1)
+	if (env->ttx == 1 || env->ttx == 2)
 		draw_tex(env, x);
 }
