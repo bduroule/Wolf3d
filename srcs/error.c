@@ -43,3 +43,43 @@ int		count_line(char **tab)
 		i++;
 	return (i);
 }
+
+void	error_file(int fd, char *av)
+{
+	errno = 0;
+	read(fd, av, 0);
+	if (errno != 0)
+	{
+		perror("error ");
+		exit(0);
+	}
+}
+
+void	error_map(t_env *env)
+{
+	t_index id;
+
+	id.i = -1;
+	if (env->width == 0 || env->height == 0)
+		exit(0);
+	while (++id.i < env->height && (id.j = -1))
+		while (++id.j < env->width)
+		{
+			if (id.i == env->width - 1 || id.i == 0)
+				env->map[id.i][id.j] = 1;
+			if (id.j == env->height - 1 || id.j == 0)
+				env->map[id.i][id.j] = 1;
+			if (env->map[id.i][id.j] == 2)
+			{
+				env->posx = id.i;
+				env->posy = id.j;
+			}
+		}
+	if (env->map[(int)env->posx + 1][(int)env->posy] != 0 ||
+		env->map[(int)env->posx - 1][(int)env->posy] != 0 ||
+		env->map[(int)env->posx][(int)env->posy - 1] != 0 ||
+		env->map[(int)env->posx][(int)env->posy + 1] != 0)
+		exit(0);
+	if (env->posx == -1 && env->posy == -1)
+		exit(0);
+}

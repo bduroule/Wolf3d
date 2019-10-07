@@ -13,6 +13,13 @@
 
 #include "wolf.h"
 
+int		out(void *param)
+{
+	(void)param;
+	exit(EXIT_SUCCESS);
+	return (0);
+}
+
 void	wolf_run(t_env *env)
 {
 	int x;
@@ -28,6 +35,23 @@ void	wolf_run(t_env *env)
 	}
 }
 
+void	mlx_init_file(t_env *env)
+{
+	env->space = 1;
+	env->mlx_ptr = mlx_init();
+	env->win_ptr = mlx_new_window(env->mlx_ptr, WIDTH, HEIGHT, "Wolf3d");
+	env->ptr_img = mlx_new_image(env->mlx_ptr, WIDTH, HEIGHT);
+	env->ttx = 1;
+}
+
+void	loop_main(t_env *env)
+{
+	init_a(env);
+	display(env);
+	hook_loop(env);
+	mlx_loop(env->mlx_ptr);
+}
+
 int		main(int ac, char **av)
 {
 	t_map	*map;
@@ -40,19 +64,17 @@ int		main(int ac, char **av)
 		return (0);
 	if ((fd = open(av[1], O_RDONLY)) == -1)
 		return (0);
+	env->posy = -1;
+	env->posx = -1;
+	error_file(fd, av[1]);
 	map = NULL;
-	env->mlx_ptr = mlx_init();
-	env->win_ptr = mlx_new_window(env->mlx_ptr, WIDTH, HEIGHT, "Wolf3d");
-	env->ptr_img = mlx_new_image(env->mlx_ptr, WIDTH, HEIGHT);
-	env->ttx = 1;
+	mlx_init_file(env);
 	generate_tex(env);
 	env->my_str_img = (unsigned int *)mlx_get_data_addr(env->ptr_img,
 		&(env->bpp), &(env->s_l), &(env->endian));
 	if (!(split_map(fd, &map, env)))
 		return (write(1, "map error\n", 10));
-	init_a(env);
-	display(env);
-	hook_loop(env);
-	mlx_loop(env->mlx_ptr);
+	error_map(env);
+	loop_main(env);
 	return (0);
 }

@@ -68,7 +68,7 @@ void		raycasting_hit(t_env *env)
 			env->mapy += env->stepy;
 			env->side = 1;
 		}
-		if (env->map[env->mapx][env->mapy] > 0)
+		if (env->map[env->mapx][env->mapy] == 1)
 			env->hit = 1;
 	}
 }

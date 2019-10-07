@@ -13,34 +13,32 @@
 
 #include "wolf.h"
 
-void	init_a(t_env *env)
+void	init_a(t_env *e)
 {
-	env->posx = (int)env->width / 2;
-	env->posy = (int)env->height / 2;
-	env->dirx = -1.0;
-	env->diry = 0.0;
-	env->planex = 0.0;
-	env->planey = 0.66;
-	env->time = 0;
-	env->oldtime = 0;
+	e->dirx = -1.0;
+	e->diry = 0.0;
+	e->planex = 0.0;
+	e->planey = 0.66;
+	e->time = 0;
+	e->oldtime = 0;
 }
 
-void	texture(t_env *env, int texnb)
+void	texture(t_env *e, int texnb)
 {
-	env->texnum = 0;
-	if (env->side == 0)
-		env->wallx = env->posy + env->perpwalldist * env->raydiry;
+	e->texnum = 0;
+	if (e->side == 0)
+		e->wallx = e->posy + e->perpwalldist * e->raydiry;
 	else
-		env->wallx = env->posx + env->perpwalldist * env->raydirx;
-	env->wallx -= floor(env->wallx);
-	env->t_x = (int)(env->wallx * (double)env->tex[texnb].width);
-	if (env->side == 0 && env->raydirx > 0)
-		env->t_x = env->tex[texnb].width - env->t_x - 1;
-	if (env->side == 1 && env->raydiry < 0)
-		env->t_x = env->tex[texnb].width - env->t_x - 1;
+		e->wallx = e->posx + e->perpwalldist * e->raydirx;
+	e->wallx -= floor(e->wallx);
+	e->t_x = (int)(e->wallx * (double)e->tex[texnb].width);
+	if (e->side == 0 && e->raydirx > 0)
+		e->t_x = e->tex[texnb].width - e->t_x - 1;
+	if (e->side == 1 && e->raydiry < 0)
+		e->t_x = e->tex[texnb].width - e->t_x - 1;
 }
 
-void	sole(t_env *env)
+void	sole(t_env *e)
 {
 	int i;
 	int j;
@@ -48,46 +46,62 @@ void	sole(t_env *env)
 	i = -1;
 	while (++i < HEIGHT && (j = -1))
 		while (++j < WIDTH)
-			env->my_str_img[i * WIDTH + j] = i < HEIGHT * .5 ? 0x3498DB :
+			e->my_str_img[i * WIDTH + j] = i < HEIGHT * .5 ? 0x3498DB :
 		0x909497;
 }
 
-void	generate_tex_p(t_env *env)
+void	generate_tex_p(t_env *e)
 {
-	env->tex[0].img = mlx_xpm_file_to_image(env->mlx_ptr, "./texture/tex1.xpm",
-		&env->tex[0].width, &env->tex[0].heigthwrhm);
-	env->tex[1].img = mlx_xpm_file_to_image(env->mlx_ptr, "./texture/tex2.xpm",
-		&env->tex[1].width, &env->tex[1].heigthwrhm);
-	env->tex[2].img = mlx_xpm_file_to_image(env->mlx_ptr, "./texture/tex3.xpm",
-		&env->tex[2].width, &env->tex[2].heigthwrhm);
-	env->tex[3].img = mlx_xpm_file_to_image(env->mlx_ptr, "./texture/tex4.xpm",
-		&env->tex[3].width, &env->tex[3].heigthwrhm);
-	env->tex[0].adr = (unsigned int *)mlx_get_data_addr(env->tex[0].img,
-		&(env->tex[0].bpp), &(env->tex[0].s_l), &(env->tex[0].endian));
-	env->tex[1].adr = (unsigned int *)mlx_get_data_addr(env->tex[1].img,
-		&(env->tex[1].bpp), &(env->tex[1].s_l), &(env->tex[1].endian));
-	env->tex[2].adr = (unsigned int *)mlx_get_data_addr(env->tex[2].img,
-		&(env->tex[2].bpp), &(env->tex[2].s_l), &(env->tex[2].endian));
-	env->tex[3].adr = (unsigned int *)mlx_get_data_addr(env->tex[3].img,
-		&(env->tex[3].bpp), &(env->tex[3].s_l), &(env->tex[3].endian));
+	if (!(e->tex[0].img = mlx_xpm_file_to_image(e->mlx_ptr, "./texture/t1.xpm",
+		&e->tex[0].width, &e->tex[0].heigthwrhm)))
+		return ;
+	if (!(e->tex[1].img = mlx_xpm_file_to_image(e->mlx_ptr, "./texture/t2.xpm",
+		&e->tex[1].width, &e->tex[1].heigthwrhm)))
+		return ;
+	if (!(e->tex[2].img = mlx_xpm_file_to_image(e->mlx_ptr, "./texture/t3.xpm",
+		&e->tex[2].width, &e->tex[2].heigthwrhm)))
+		return ;
+	if (!(e->tex[3].img = mlx_xpm_file_to_image(e->mlx_ptr, "./texture/t4.xpm",
+		&e->tex[3].width, &e->tex[3].heigthwrhm)))
+		return ;
+	if (!(e->tex[0].adr = (unsigned int *)mlx_get_data_addr(e->tex[0].img,
+		&(e->tex[0].bpp), &(e->tex[0].s_l), &(e->tex[0].endian))))
+		return ;
+	if (!(e->tex[1].adr = (unsigned int *)mlx_get_data_addr(e->tex[1].img,
+		&(e->tex[1].bpp), &(e->tex[1].s_l), &(e->tex[1].endian))))
+		return ;
+	if (!(e->tex[2].adr = (unsigned int *)mlx_get_data_addr(e->tex[2].img,
+		&(e->tex[2].bpp), &(e->tex[2].s_l), &(e->tex[2].endian))))
+		return ;
+	if (!(e->tex[3].adr = (unsigned int *)mlx_get_data_addr(e->tex[3].img,
+		&(e->tex[3].bpp), &(e->tex[3].s_l), &(e->tex[3].endian))))
+		return ;
 }
 
-void	generate_tex(t_env *env)
+void	generate_tex(t_env *e)
 {
-	env->tex[0].img = mlx_xpm_file_to_image(env->mlx_ptr, "./texture/mur.xpm",
-		&env->tex[0].width, &env->tex[0].heigthwrhm);
-	env->tex[1].img = mlx_xpm_file_to_image(env->mlx_ptr, "./texture/mur2.xpm",
-		&env->tex[1].width, &env->tex[1].heigthwrhm);
-	env->tex[2].img = mlx_xpm_file_to_image(env->mlx_ptr, "./texture/mur3.xpm",
-		&env->tex[2].width, &env->tex[2].heigthwrhm);
-	env->tex[3].img = mlx_xpm_file_to_image(env->mlx_ptr, "./texture/mur5.xpm",
-		&env->tex[3].width, &env->tex[3].heigthwrhm);
-	env->tex[0].adr = (unsigned int *)mlx_get_data_addr(env->tex[0].img,
-		&(env->tex[0].bpp), &(env->tex[0].s_l), &(env->tex[0].endian));
-	env->tex[1].adr = (unsigned int *)mlx_get_data_addr(env->tex[1].img,
-		&(env->tex[1].bpp), &(env->tex[1].s_l), &(env->tex[1].endian));
-	env->tex[2].adr = (unsigned int *)mlx_get_data_addr(env->tex[2].img,
-		&(env->tex[2].bpp), &(env->tex[2].s_l), &(env->tex[2].endian));
-	env->tex[3].adr = (unsigned int *)mlx_get_data_addr(env->tex[3].img,
-		&(env->tex[3].bpp), &(env->tex[3].s_l), &(env->tex[3].endian));
+	if (!(e->tex[0].img = mlx_xpm_file_to_image(e->mlx_ptr, "./texture/m.xpm",
+		&e->tex[0].width, &e->tex[0].heigthwrhm)))
+		return ;
+	if (!(e->tex[1].img = mlx_xpm_file_to_image(e->mlx_ptr, "./texture/m1.xpm",
+		&e->tex[1].width, &e->tex[1].heigthwrhm)))
+		return ;
+	if (!(e->tex[2].img = mlx_xpm_file_to_image(e->mlx_ptr, "./texture/m2.xpm",
+		&e->tex[2].width, &e->tex[2].heigthwrhm)))
+		return ;
+	if (!(e->tex[3].img = mlx_xpm_file_to_image(e->mlx_ptr, "./texture/m3.xpm",
+		&e->tex[3].width, &e->tex[3].heigthwrhm)))
+		return ;
+	if (!(e->tex[0].adr = (unsigned int *)mlx_get_data_addr(e->tex[0].img,
+		&(e->tex[0].bpp), &(e->tex[0].s_l), &(e->tex[0].endian))))
+		return ;
+	if (!(e->tex[1].adr = (unsigned int *)mlx_get_data_addr(e->tex[1].img,
+		&(e->tex[1].bpp), &(e->tex[1].s_l), &(e->tex[1].endian))))
+		return ;
+	if (!(e->tex[2].adr = (unsigned int *)mlx_get_data_addr(e->tex[2].img,
+		&(e->tex[2].bpp), &(e->tex[2].s_l), &(e->tex[2].endian))))
+		return ;
+	if (!(e->tex[3].adr = (unsigned int *)mlx_get_data_addr(e->tex[3].img,
+		&(e->tex[3].bpp), &(e->tex[3].s_l), &(e->tex[3].endian))))
+		return ;
 }

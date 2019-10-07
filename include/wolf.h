@@ -22,6 +22,8 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <errno.h>
+# include <stdio.h>
 # include <sys/time.h>
 
 # define WIDTH 1280
@@ -86,6 +88,8 @@ typedef struct			s_env
 	double				wallx;
 	int					t_x;
 	int					t_y;
+	int					tmpx;
+	int					space;
 }						t_env;
 
 typedef struct			s_color
@@ -100,6 +104,12 @@ typedef struct			s_map
 	int					*n;
 	struct s_map		*next;
 }						t_map;
+
+typedef struct			s_index
+{
+	int					i;
+	int					j;
+}						t_index;
 
 int						split_map(int fd, t_map **map, t_env *env);
 void					free_file(t_env *env, t_map *map, char **tab,
@@ -125,5 +135,10 @@ void					sole(t_env *env);
 unsigned int			get_color(t_texture tex, int x, int y);
 unsigned int			wall_color(int r, int g, int b);
 void					generate_tex_p(t_env *env);
+void					error_file(int fd, char *av);
+void					error_map(t_env *env);
+int						out(void *param);
+int						mouse_m(int x, t_env *e);
+int						mouse_moove(int x, int y, t_env *e);
 
 #endif
