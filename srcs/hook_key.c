@@ -16,25 +16,23 @@
 void	straff(int key, t_env *e)
 {
 	if (e->space == 0 ? key == 0 : key == 12)
-    {
-		printf("%d\n", key);
-        if (!(e->map[(int)((e->posx - (e->dirx > 0 ? -.05 : +.05)) + e->dirx
-            * e->movespeed)][(int)(e->posy)]))
-            e->posx -= e->planex * e->movespeed;;
-        if (!(e->map[(int)(e->posx)][(int)((e->posy - (e->diry > 0 ? -.05 :
-        	+.05)) + e->diry * e->movespeed)]))
-            e->posy -= e->planey * e->movespeed;
-    }
+	{
+		if (!(e->map[(int)((e->posx - (e->dirx > 0 ? -.05 : +.05)) + e->dirx
+		* e->movespeed)][(int)(e->posy)] == 1))
+			e->posx -= e->planex * e->movespeed;
+		if (!(e->map[(int)(e->posx)][(int)((e->posy - (e->diry > 0 ? -.05 :
+		+.05)) + e->diry * e->movespeed)] == 1))
+			e->posy -= e->planey * e->movespeed;
+	}
 	if (e->space == 0 ? key == 2 : key == 14)
-    {
-		printf("%d\n", key);
-        if (!(e->map[(int)((e->posx - (e->dirx > 0 ? -.05 : +.05)) + e->dirx
-            * e->movespeed)][(int)(e->posy)]))
-            e->posx += e->planex * e->movespeed;;
-        if (!(e->map[(int)(e->posx)][(int)((e->posy - (e->diry > 0 ? -.05 :
-        +.05)) + e->diry * e->movespeed)]))
-            e->posy += e->planey * e->movespeed;
-    }
+	{
+		if (!(e->map[(int)((e->posx - (e->dirx > 0 ? -.05 : +.05)) + e->dirx
+		* e->movespeed)][(int)(e->posy)] == 1))
+			e->posx += e->planex * e->movespeed;
+		if (!(e->map[(int)(e->posx)][(int)((e->posy - (e->diry > 0 ? -.05 :
+		+.05)) + e->diry * e->movespeed)] == 1))
+			e->posy += e->planey * e->movespeed;
+	}
 }
 
 int		deal_key2(int key, t_env *e)
