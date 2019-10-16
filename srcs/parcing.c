@@ -80,34 +80,31 @@ int		store_coord(t_map *map, t_env *env)
 		i++;
 		tmp = tmp->next;
 	}
-	return (0);
+	return (1);
 }
 
 int		split_map(int fd, t_map **map, t_env *env)
 {
-	char	*line;
-	char	**tab;
-	int		n;
-	int		i;
-	int		count;
+	t_parse p;
 
-	n = 0;
-	i = 0;
-	count = 0;
-	while (get_next_line(fd, &line) > 0)
+	p = (t_parse){.n = 0, .i = 0, .count = 0};
+	while (get_next_line(fd, &p.line) > 0)
 	{
-		if (!(tab = ft_strsplit(line, ' ')))
+		if (!p.line || !p.line[0])
+			continue ;
+		if (!(p.tab = ft_strsplit(p.line, ' ')))
 			return (0);
-		if (check_line(tab, &count) == 0)
-			free_file(env, *map, tab, line);
-		if (!(store_line(map, env, tab, i)))
+		if (check_line(p.tab, &p.count) == 0)
+			free_file(env, *map, p.tab, p.line);
+		if (!(store_line(map, env, p.tab, p.i)))
 			return (0);
-		if (line)
-			free(line);
-		free_tab(&tab);
-		n++;
+		if (p.line)
+			free(p.line);
+		free_tab(&p.tab);
+		p.n++;
 	}
-	env->height = n;
-	store_coord(*map, env);
+	env->height = p.n;
+	if (!store_coord(*map, env))
+		return (0);
 	return (1);
 }

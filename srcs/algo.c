@@ -21,6 +21,7 @@ void	init_a(t_env *e)
 	e->planey = 0.66;
 	e->time = 0;
 	e->oldtime = 0;
+	e->speed_id = 0.02;
 }
 
 void	texture(t_env *e, int texnb)
@@ -50,58 +51,60 @@ void	sole(t_env *e)
 		0x909497;
 }
 
-void	generate_tex_p(t_env *e)
+int		generate_tex_p(t_env *e)
 {
 	if (!(e->tex[0].img = mlx_xpm_file_to_image(e->mlx_ptr, "./texture/t1.xpm",
 		&e->tex[0].width, &e->tex[0].heigthwrhm)))
-		return ;
+		return (0);
 	if (!(e->tex[1].img = mlx_xpm_file_to_image(e->mlx_ptr, "./texture/t2.xpm",
 		&e->tex[1].width, &e->tex[1].heigthwrhm)))
-		return ;
+		return (0);
 	if (!(e->tex[2].img = mlx_xpm_file_to_image(e->mlx_ptr, "./texture/t3.xpm",
 		&e->tex[2].width, &e->tex[2].heigthwrhm)))
-		return ;
+		return (0);
 	if (!(e->tex[3].img = mlx_xpm_file_to_image(e->mlx_ptr, "./texture/t4.xpm",
 		&e->tex[3].width, &e->tex[3].heigthwrhm)))
-		return ;
+		return (0);
 	if (!(e->tex[0].adr = (unsigned int *)mlx_get_data_addr(e->tex[0].img,
 		&(e->tex[0].bpp), &(e->tex[0].s_l), &(e->tex[0].endian))))
-		return ;
+		return (0);
 	if (!(e->tex[1].adr = (unsigned int *)mlx_get_data_addr(e->tex[1].img,
 		&(e->tex[1].bpp), &(e->tex[1].s_l), &(e->tex[1].endian))))
-		return ;
+		return (0);
 	if (!(e->tex[2].adr = (unsigned int *)mlx_get_data_addr(e->tex[2].img,
 		&(e->tex[2].bpp), &(e->tex[2].s_l), &(e->tex[2].endian))))
-		return ;
+		return (0);
 	if (!(e->tex[3].adr = (unsigned int *)mlx_get_data_addr(e->tex[3].img,
 		&(e->tex[3].bpp), &(e->tex[3].s_l), &(e->tex[3].endian))))
-		return ;
+		return (0);
+	return (1);
 }
 
-void	generate_tex(t_env *e)
+int		generate_tex(t_env *e)
 {
 	if (!(e->tex[0].img = mlx_xpm_file_to_image(e->mlx_ptr, "./texture/m.xpm",
 		&e->tex[0].width, &e->tex[0].heigthwrhm)))
-		return ;
+		return (0);
 	if (!(e->tex[1].img = mlx_xpm_file_to_image(e->mlx_ptr, "./texture/m1.xpm",
 		&e->tex[1].width, &e->tex[1].heigthwrhm)))
-		return ;
+		return (0);
 	if (!(e->tex[2].img = mlx_xpm_file_to_image(e->mlx_ptr, "./texture/m2.xpm",
 		&e->tex[2].width, &e->tex[2].heigthwrhm)))
-		return ;
+		return (0);
 	if (!(e->tex[3].img = mlx_xpm_file_to_image(e->mlx_ptr, "./texture/m3.xpm",
 		&e->tex[3].width, &e->tex[3].heigthwrhm)))
-		return ;
+		return (0);
 	if (!(e->tex[0].adr = (unsigned int *)mlx_get_data_addr(e->tex[0].img,
 		&(e->tex[0].bpp), &(e->tex[0].s_l), &(e->tex[0].endian))))
-		return ;
+		return (0);
 	if (!(e->tex[1].adr = (unsigned int *)mlx_get_data_addr(e->tex[1].img,
 		&(e->tex[1].bpp), &(e->tex[1].s_l), &(e->tex[1].endian))))
-		return ;
+		return (0);
 	if (!(e->tex[2].adr = (unsigned int *)mlx_get_data_addr(e->tex[2].img,
 		&(e->tex[2].bpp), &(e->tex[2].s_l), &(e->tex[2].endian))))
-		return ;
+		return (0);
 	if (!(e->tex[3].adr = (unsigned int *)mlx_get_data_addr(e->tex[3].img,
 		&(e->tex[3].bpp), &(e->tex[3].s_l), &(e->tex[3].endian))))
-		return ;
+		return (0);
+	return (1);
 }

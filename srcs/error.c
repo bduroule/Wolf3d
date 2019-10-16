@@ -65,21 +65,19 @@ void	error_map(t_env *env)
 	while (++id.i < env->height && (id.j = -1))
 		while (++id.j < env->width)
 		{
-			if (id.i == env->width - 1 || id.i == 0)
+			if (id.i == env->height - 1 || id.i == 0)
 				env->map[id.i][id.j] = 1;
-			if (id.j == env->height - 1 || id.j == 0)
+			if (id.j == env->width - 1 || id.j == 0)
 				env->map[id.i][id.j] = 1;
 			if (env->map[id.i][id.j] == 2)
 			{
-				env->posx = id.i;
-				env->posy = id.j;
+				env->posx = id.i + 0.5;
+				env->posy = id.j + 0.5;
 			}
 		}
-	if (env->map[(int)env->posx + 1][(int)env->posy] != 0 ||
-		env->map[(int)env->posx - 1][(int)env->posy] != 0 ||
-		env->map[(int)env->posx][(int)env->posy - 1] != 0 ||
-		env->map[(int)env->posx][(int)env->posy + 1] != 0)
-		exit(0);
 	if (env->posx == -1 && env->posy == -1)
+	{
+		write(1, "error : bad player position\n", 28);
 		exit(0);
+	}
 }

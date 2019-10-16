@@ -59,11 +59,11 @@ int		main(int ac, char **av)
 	int		fd;
 
 	if (ac != 2)
-		return (0);
+		return (write(1, "usage : ./wolf3d [map]\n", 23));
 	if (!(env = (t_env *)malloc(sizeof(t_env))))
-		return (0);
+		return (write(1, "error : bad alocation\n", 22));
 	if ((fd = open(av[1], O_RDONLY)) == -1)
-		return (0);
+		return (write(1, "error : invalide file\n", 22));
 	env->posy = -1;
 	env->posx = -1;
 	error_file(fd, av[1]);

@@ -1,3 +1,16 @@
+# **************************************************************************** #
+#                                                           LE - /             #
+#                                                               /              #
+#    Makefile                                         .::    .:/ .      .::    #
+#                                                  +:+:+   +:    +:  +:+:+     #
+#    By: beduroul <marvin@le-101.fr>                +:+   +:    +:    +:+      #
+#                                                  #+#   #+    #+    #+#       #
+#    Created: 2019/10/14 16:48:13 by beduroul     #+#   ##    ##    #+#        #
+#    Updated: 2019/10/14 16:48:14 by beduroul    ###    #+. /#+    ###.fr      #
+#                                                          /                   #
+#                                                         /                    #
+# **************************************************************************** #
+
 NAME = wolf3d
 
 #Color
@@ -13,7 +26,15 @@ SRC_PATH = ./srcs/
 INC_PATH = ./include/
 
 #file
-SRC_NAME = 	main.c parcing.c error.c display.c algo.c mlx_draw.c raycasting.c hook_key.c hook_mouse.c
+SRC_NAME = 	main.c 			\
+			parcing.c		\
+			error.c			\
+			display.c		\
+			algo.c			\
+			mlx_draw.c		\
+			raycasting.c	\
+			hook_key.c		\
+			hook_mouse.c	\
 
 # mlx library
 MLX        = ./minilibx_macos/
@@ -45,9 +66,9 @@ create_dirs:
 
 $(NAME): $(OBJ)
 	@$(CC) $(OBJ) $(MLX_LNK) $(FT_LNK) -o $(NAME)
-	@printf "$(YELLOW)$(NAME)$(END)		$(GREEN)[compiled]$(END)\n"
+	@printf "\n$(YELLOW)$(NAME)$(END)		$(GREEN)[compiled]$(END)\n"
 
-$(OBJ_PATH)%.o: $(SRC_PATH)%.c include/wolf.h libft/libft.a | $(OBJ_PATH)
+$(OBJ_PATH)%.o: $(SRC_PATH)%.c include/wolf.h include/struct.h libft/libft.a | $(OBJ_PATH)
 	@$(CC) $(CFLAGS) $(FT_INC) $(MLX_INC) -I $(INC_PATH)  -o $@ -c $<
 	@printf "$(BLUE)>>Compiling $(WITHE) $< $(END)"
 
